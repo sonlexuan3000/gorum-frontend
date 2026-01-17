@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate, useSearchParams } from 'react-router-dom';
-import { ArrowLeft, Plus, Search } from 'lucide-react';
+import { ArrowLeft, Plus, Search, TrendingUp, Clock } from 'lucide-react';
 import type { Topic, Post } from '../types';
 import { topicsApi } from '../api/topics';
 import { postsApi } from '../api/posts';
@@ -19,7 +19,9 @@ export default function TopicPage() {
   const [searchParams, setSearchParams] = useSearchParams();
   
   const currentQuery = searchParams.get('q') || '';
+  const currentSort = searchParams.get('sort_by') || 'time'; 
   const [searchTerm, setSearchTerm] = useState(currentQuery);
+  const [sortBy, setSortBy] = useState(currentSort); 
 
   const [topic, setTopic] = useState<Topic | null>(null);
   const [posts, setPosts] = useState<Post[]>([]);
@@ -31,11 +33,19 @@ export default function TopicPage() {
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
+    const params: any = { sort_by: sortBy }; 
     if (searchTerm.trim()) {
-      setSearchParams({ q: searchTerm.trim() });
-    } else {
-      setSearchParams({});
+      params.q = searchTerm.trim();
     }
+    setSearchParams(params);
+  };
+  const handleSortChange = (newSort: string) => {
+    setSortBy(newSort);
+    const params: any = { sort_by: newSort };
+    if (currentQuery) {
+      params.q = currentQuery;
+    }
+    setSearchParams(params);
   };
 
   const fetchData = async () => {
@@ -44,7 +54,7 @@ export default function TopicPage() {
     try {
       const [topicData, postsData] = await Promise.all([
         topicsApi.getById(parseInt(topicId)),
-        postsApi.getByTopicId(parseInt(topicId), currentQuery),
+        postsApi.getByTopicId(parseInt(topicId), currentQuery, currentSort), 
       ]);
       setTopic(topicData);
       setPosts(postsData);
@@ -60,7 +70,8 @@ export default function TopicPage() {
   useEffect(() => {
     fetchData();
     setSearchTerm(currentQuery);
-  }, [topicId, currentQuery]);
+    setSortBy(currentSort);
+  }, [topicId, currentQuery, currentSort]); 
 
   const handleCreatePost = async (data: { title: string; content: string }) => {
     if (!topicId) return;
@@ -157,9 +168,34 @@ export default function TopicPage() {
         </Button>
       </div>
 
-      <div className="flex justify-end mb-6">
-        <form onSubmit={handleSearch} className="relative w-64 group">
-          <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-orange-500 transition-colors">
+      <div className="flex flex-col sm:flex-row gap-4 mb-6">
+        <div className="flex gap-2 bg-gray-100 p-1 rounded-lg">
+          <button
+            onClick={() => handleSortChange('time')}
+            className={`flex items-center gap-2 px-4 py-2 rounded-md font-medium transition-all ${
+              sortBy === 'time'
+                ? 'bg-white text-orange-600 shadow-sm'
+                : 'text-gray-600 hover:text-gray-900'
+            }`}
+          >
+            <Clock size={18} />
+            <span className="hidden sm:inline">Recent</span>
+          </button>
+          <button
+            onClick={() => handleSortChange('votes')}
+            className={`flex items-center gap-2 px-4 py-2 rounded-md font-medium transition-all ${
+              sortBy === 'votes'
+                ? 'bg-white text-orange-600 shadow-sm'
+                : 'text-gray-600 hover:text-gray-900'
+            }`}
+          >
+            <TrendingUp size={18} />
+            <span className="hidden sm:inline">Top Voted</span>
+          </button>
+        </div>
+
+        <form onSubmit={handleSearch} className="relative flex-1 max-w-md ml-auto group">
+          <div className="absolute left-3 top-1/3 -translate-y-1/2 text-gray-400 group-focus-within:text-orange-500 transition-colors">
             <Search size={18} />
           </div>
           <input

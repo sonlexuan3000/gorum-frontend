@@ -2,9 +2,12 @@ import apiClient from './client';
 import {type Post } from '../types';
 
 export const postsApi = {
-  getByTopicId: async (topicId: number, searchQuery?: string): Promise<Post[]> => {
+  getByTopicId: async (topicId: number, searchQuery?: string, sortBy?: string): Promise<Post[]> => {
     const { data } = await apiClient.get(`/api/topics/${topicId}/posts`, {
-      params: { q: searchQuery }
+      params: { 
+        q: searchQuery,
+        sort_by: sortBy 
+      }
     });
     return data;
   },
