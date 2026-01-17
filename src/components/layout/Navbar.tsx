@@ -20,10 +20,13 @@ export default function Navbar() {
           {/* User menu */}
           {user && (
             <div className="flex items-center gap-4">
-              <div className="flex items-center gap-2 px-3 py-1.5 bg-secondary-100 rounded-lg text-sm text-neutral-700">
+              <Link 
+                to={`/profile/${user.username}`}
+                className="flex items-center gap-2 px-3 py-1.5 bg-secondary-100 rounded-lg text-sm text-neutral-700 hover:bg-secondary-200 transition-colors"
+              >
                 <User size={16} />
                 <span className="font-medium">{user.username}</span>
-              </div>
+              </Link>
               <Button
                 variant="ghost"
                 size="sm"

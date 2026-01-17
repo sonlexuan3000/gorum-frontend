@@ -2,6 +2,10 @@ export interface User {
   id: number;
   username: string;
   email: string;
+  avatar_url?: string;        
+  bio?: string;               
+  posts_count?: number;       
+  comments_count?: number;    
   created_at: string;
   updated_at: string;
 }

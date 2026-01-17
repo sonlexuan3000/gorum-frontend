@@ -9,8 +9,8 @@ import VoteButtons from './VoteButtons';
 
 interface PostCardProps {
   post: Post;
-  onEdit: (post: Post) => void;
-  onDelete: (post: Post) => void;
+  onEdit?: (post: Post) => void;  // THÊM ?
+  onDelete?: (post: Post) => void; // THÊM ?
 }
 
 export default function PostCard({ post, onEdit, onDelete }: PostCardProps) {
@@ -59,7 +59,8 @@ export default function PostCard({ post, onEdit, onDelete }: PostCardProps) {
           </div>
         </div>
 
-        {isOwner && (
+        {/* CHỈ HIỂN THỊ BUTTONS NẾU CÓ onEdit VÀ onDelete */}
+        {isOwner && onEdit && onDelete && (
           <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
             <Button
               variant="ghost"

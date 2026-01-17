@@ -4,6 +4,7 @@ import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
 import HomePage from './pages/HomePage';
 import TopicPage from './pages/TopicPage';
+import UserProfilePage from './pages/UserProfilePage';
 import PostPage from './pages/PostPage';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 import Layout from './components/layout/Layout';
@@ -75,6 +76,16 @@ function App() {
           }
         />
         
+        <Route
+          path="/profile/:username"
+          element={
+            <ProtectedRoute>
+              <Layout>
+                <UserProfilePage />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
