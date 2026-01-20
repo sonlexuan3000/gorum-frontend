@@ -1,74 +1,241 @@
-# React + TypeScript + Vite
+# Gorum - Modern Web Forum
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Student Name:** [Le Xuan Son]
 
-Currently, two official plugins are available:
+A modern, feature-rich web forum application built with Go and React. Gorum provides a seamless platform for community discussions with topics, posts, comments, voting, and real-time notifications.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## Links
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Live Application:** https://gorum-frontend.vercel.app
+- **Backend API:** https://gorum-backend.onrender.com
+- **Frontend Repository:** https://github.com/sonlexuan3000/gorum-frontend
+- **Backend Repository:** https://github.com/sonlexuan3000/gorum-backend
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Features
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+The web forum is fully functional, equipped with essential features:
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- **User Management:** User registration, authentication, and profile customization
+- **Topics & Posts:** Organized discussion topics with rich post creation
+- **Nested Comments:** Threaded comment system with reply support
+- **Voting System:** Upvote/downvote posts with toggle functionality
+- **Notifications:** Real-time notifications for votes, comments, and replies
+- **Search & Sort:** Search posts by content, sort by recent or votes
+- **User Profiles:** Activity history, statistics, and customizable avatars
+- **Responsive Design:** Optimized for both desktop and mobile devices
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+---
+
+## Technology Stack
+
+**Backend:**
+- Go 1.25.0 with Gin framework
+- PostgreSQL database
+- GORM for database operations
+- JWT authentication
+- bcrypt password hashing
+
+**Frontend:**
+- React 18 with TypeScript
+- Vite build tool
+- Tailwind CSS for styling
+- Zustand for state management
+- Axios for API communication
+- React Router for navigation
+
+**Deployment:**
+- Frontend: Vercel
+- Backend: Render
+- Database: Render PostgreSQL
+
+---
+
+## Installation
+
+### Backend Setup
+
+Clone the repository:
+```bash
+git clone https://github.com/sonlexuan3000/gorum-backend.git
+cd gorum-backend
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+Download the dependencies:
+```bash
+go mod download
 ```
-# gorum-frontend
+
+Build the project:
+```bash
+go build -o bin/server cmd/server/main.go
+```
+
+### Frontend Setup
+
+Clone the repository:
+```bash
+git clone https://github.com/sonlexuan3000/gorum-frontend.git
+cd gorum-frontend
+```
+
+Install the dependencies:
+```bash
+npm install
+```
+
+---
+
+## Configuration
+
+### Backend Configuration
+
+Create a `.env` file in the backend root directory:
+```env
+PORT=8080
+DB_HOST=localhost
+DB_PORT=5432
+DB_USER=your_username
+DB_PASSWORD=your_password
+DB_NAME=forum_db
+JWT_SECRET=your-super-secret-jwt-key
+FRONTEND_URL=http://localhost:5173
+```
+
+**Note:** You must configure database credentials and JWT secret.
+
+### Frontend Configuration
+
+Create a `.env` file in the frontend root directory:
+```env
+VITE_API_URL=http://localhost:8080
+```
+
+For production deployment, update to your backend URL:
+```env
+VITE_API_URL=https://gorum-backend.onrender.com
+```
+
+---
+
+## Usage
+
+### Running Locally
+
+**Backend:**
+
+Before running the application, set up the database. Create a PostgreSQL database:
+```bash
+createdb forum_db
+```
+
+Run database migrations (automatic on first start):
+```bash
+./bin/server
+```
+
+
+Run the backend server:
+```bash
+go run cmd/server/main.go
+```
+
+The backend will be available at `http://localhost:8080`
+
+**Frontend:**
+
+Run the development server:
+```bash
+npm run dev
+```
+
+The frontend will be available at `http://localhost:5173`
+
+Or build for production:
+```bash
+npm run build
+```
+
+---
+
+
+## API Documentation
+
+The backend provides the following main endpoints:
+
+**Authentication:**
+- `POST /auth/signup` - Register new user
+- `POST /auth/login` - User login
+
+**Topics:**
+- `GET /api/topics` - List all topics
+- `POST /api/topics` - Create topic (auth required)
+- `PUT /api/topics/:id` - Update topic (auth required)
+- `DELETE /api/topics/:id` - Delete topic (auth required)
+
+**Posts:**
+- `GET /api/topics/:id/posts` - Get posts by topic
+- `GET /api/posts/:id` - Get single post
+- `POST /api/posts` - Create post (auth required)
+- `PUT /api/posts/:id` - Update post (auth required)
+- `DELETE /api/posts/:id` - Delete post (auth required)
+- `POST /api/posts/:id/vote` - Vote on post (auth required)
+- `DELETE /api/posts/:id/vote` - Remove vote (auth required)
+
+**Comments:**
+- `GET /api/posts/:id/comments` - Get comments for post
+- `POST /api/comments` - Create comment (auth required)
+- `PUT /api/comments/:id` - Update comment (auth required)
+- `DELETE /api/comments/:id` - Delete comment (auth required)
+
+**Users:**
+- `GET /api/users/me` - Get current user (auth required)
+- `PUT /api/users/me` - Update profile (auth required)
+- `GET /api/users/:identifier` - Get user profile
+- `GET /api/users/:identifier/posts` - Get user's posts
+- `GET /api/users/:identifier/comments` - Get user's comments
+
+**Notifications:**
+- `GET /api/notifications` - Get notifications (auth required)
+- `GET /api/notifications/unread-count` - Get unread count (auth required)
+- `PUT /api/notifications/:id/read` - Mark as read (auth required)
+- `PUT /api/notifications/mark-all-read` - Mark all as read (auth required)
+
+---
+
+## Project Structure
+
+**Backend:**
+```
+gorum-backend/
+├── cmd/
+│   └── server/main.go      # Main application entry
+├── internal/
+│   ├── config/             # Configuration management
+│   ├── database/           # Database connection & migrations
+│   ├── handlers/           # HTTP request handlers
+│   ├── middleware/         # Authentication & CORS
+│   ├── models/             # Data models
+│   ├── repository/         # Database operations
+│   └── routes/             # Route definitions
+└── go.mod
+```
+
+**Frontend:**
+```
+gorum-frontend/
+├── src/
+│   ├── api/                # API client functions
+│   ├── components/         # React components
+│   ├── pages/              # Page components
+│   ├── store/              # State management
+│   ├── types/              # TypeScript types
+│   └── utils/              # Utility functions
+└── package.json
+```
+
+---
+**Developed by [Le Xuan Son]**
