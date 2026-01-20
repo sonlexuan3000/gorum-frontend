@@ -56,3 +56,19 @@ export interface AuthResponse {
 export interface ApiError {
   error: string;
 }
+export type NotificationType = 'vote' | 'comment' | 'reply';
+
+export interface Notification {
+  id: number;
+  user_id: number;
+  actor_id: number;
+  actor: User;
+  type: NotificationType;
+  post_id?: number;
+  post?: Post;
+  comment_id?: number;
+  comment?: Comment;
+  is_read: boolean;
+  created_at: string;
+  updated_at: string;
+}

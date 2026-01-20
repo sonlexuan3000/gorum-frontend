@@ -3,6 +3,7 @@ import { MessageSquare, LogOut, User } from 'lucide-react';
 import { useAuthStore } from '../../store/authStore';
 import Button from '../common/Button';
 import Container from './Container';
+import NotificationBell from '../notifications/NotificationBell';
 
 export default function Navbar() {
   const { user, logout } = useAuthStore();
@@ -20,6 +21,8 @@ export default function Navbar() {
           {/* User menu */}
           {user && (
             <div className="flex items-center gap-4">
+              <NotificationBell />
+              
               <Link 
                 to={`/profile/${user.username}`}
                 className="flex items-center gap-2 px-3 py-1.5 bg-secondary-100 rounded-lg text-sm text-neutral-700 hover:bg-secondary-200 transition-colors"
@@ -27,6 +30,7 @@ export default function Navbar() {
                 <User size={16} />
                 <span className="font-medium">{user.username}</span>
               </Link>
+              
               <Button
                 variant="ghost"
                 size="sm"
