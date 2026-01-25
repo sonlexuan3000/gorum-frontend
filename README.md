@@ -1,6 +1,6 @@
 # Gorum - Modern Web Forum
 
-**Student Name:** [Le Xuan Son]
+**Student Name:** Le Xuan Son
 
 A modern, feature-rich web forum application built with Go and React. Gorum provides a seamless platform for community discussions with topics, posts, comments, voting, and real-time notifications.
 
@@ -253,4 +253,37 @@ gorum-frontend/
 ```
 
 ---
-**Developed by [Le Xuan Son]**
+# AI Usage Declaration
+
+## AI Tools Used
+ChatGPT for learning purposes only
+
+## Usage Statement
+
+AI was used as an alternative to Stack Overflow.
+
+### Specific Uses:
+
+1. **Concept Clarification**
+   - "Explain how JWT tokens work"
+   - "What is the purpose of useEffect cleanup?"
+   - "Explain CORS and why it's needed"
+
+2. **Best Practices Research**
+   - "What are security best practices for password storage?"
+   - "What is the recommended project structure for Go/Gin?"
+   - "What are the differences between state management libraries?"
+
+3. **Error Understanding**
+   - Understanding what specific error messages mean
+   - Learning why errors occur
+
+4. **Deployment Platform Research**
+   - "Compare free deployment platforms for React apps (Vercel, Netlify, Railway)"
+   - "Compare free backend hosting options for Go applications (Render, Railway, Fly.io)"
+   - "What are free PostgreSQL database hosting options and their limitations?"
+   - Researched trade-offs between different platforms
+   - *Final decisions: Vercel (frontend), Render (backend + PostgreSQL)*
+
+---
+**Developed by Le Xuan Son**
