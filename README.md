@@ -74,6 +74,11 @@ Build the project:
 go build -o bin/server cmd/server/main.go
 ```
 
+Run the project:
+```bash
+./bin/server
+```
+
 ### Frontend Setup
 
 Clone the repository:
@@ -85,6 +90,16 @@ cd gorum-frontend
 Install the dependencies:
 ```bash
 npm install
+```
+
+Build the project:
+```bash
+npm run build
+```
+
+Run the project:
+```bash
+npm run dev
 ```
 
 ---
@@ -105,7 +120,7 @@ JWT_SECRET=your-super-secret-jwt-key
 FRONTEND_URL=http://localhost:5173
 ```
 
-**Note:** You must configure database credentials and JWT secret.
+**Note:** You must configure database credentials and JWT secret. In cmd/server/main.go, you can modify the allow origins to match your frontend URL. (e.g. http://localhost:5173).
 
 ### Frontend Configuration
 
